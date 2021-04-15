@@ -6,24 +6,45 @@
 <div class="container">
   Add a friend here!
   <br>
-  <form #formName="ngForm" method="post">
-    <input #inputName="ngModel" name="firstName" type="text" class="input-text" placeholder="Type firstName"
-           [(ngModel)]="friendModel.firstName">
-    <input #inputName="ngModel" name="lastName" type="text" class="input-text" placeholder="Type lastName"
-           [(ngModel)]="friendModel.lastName">
-    <input #inputName="ngModel" name="email" type="text" class="input-text" placeholder="Type email"
-           [(ngModel)]="friendModel.email">
-    <input #inputName="ngModel" name="phoneNumber" type="text" class="input-text" placeholder="Type email"
-           [(ngModel)]="friendModel.phoneNumber">
-    <select #inputName="ngModel" [(ngModel)]="friendModel.codingLanguage" name="codingLanguage">>
+  <form #formName="ngForm" method="post" novalidate (ngSubmit)="addFriend()">
+    <div class="row mb-3">
+      <div class="col-sm-10">
+        <input class="alert alert-danger" #inputName="ngModel" ngModel pattern="^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)" name="firstName" type="text" placeholder="Type firstName"
+               [(ngModel)]="friendModel.firstName" required></div>
+      <div class="message" *ngIf="inputName.invalid && inputName.touched">Required</div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-sm-10">
+        <input class="alert alert-danger" #inputName="ngModel" ngModel pattern="^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)" name="lastName" type="text" placeholder="Type lastName"
+               [(ngModel)]="friendModel.lastName" required>
+        <div class="message" *ngIf="inputName.invalid && inputName.touched">Required</div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-sm-10">
+        <input class="alert alert-danger" ngModel pattern="^([a-zA-Z0-9_\-\.\S]+)@([a-zA-Z0-9_\-\.\S]+)\.(\S[a-zA-Z]{2,5})$" #inputName="ngModel" name="email" type="text" placeholder="Type email"
+               [(ngModel)]="friendModel.email">
+        <div class="message" *ngIf="inputName.invalid && inputName.touched">Required</div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-sm">
+        <input id="phone" class="alert alert-danger" ngModel pattern="^[0-9]*$" #inputName="ngModel" name="phoneNumber" type="text"
+               placeholder="Type phone number"
+               [(ngModel)]="friendModel.phoneNumber" required maxlength="13">
+        <div class="message" *ngIf="inputName.invalid && inputName.touched">Required</div>
+      </div>
+    </div>
+    <select #inputName="ngModel" [(ngModel)]="friendModel.codingLanguage"
+            name="codingLanguage" required>>
       <option *ngFor="let languages of codingList" value="{{languages}}">{{languages}}</option>
     </select>
-    <button class="add-btn" (click)="addFriend()" (keyup.enter)="addFriend()">Add friend</button>
+    <button type="submit" [disabled]="formName.form.invalid" class="add-btn" (click)="addFriend()" (keyup.enter)="addFriend()">Add friend</button>
     <div class="list">
       <ul>
         <li>
-<!--          <input type="checkbox" name="isDone" [(ngModel)]="friendModel.firstName">-->
-<!--          {{friendModel.firstName}}-->
+          <!--          <input type="checkbox" name="isDone" [(ngModel)]="friendModel.firstName">-->
+          <!--          {{friendModel.firstName}}-->
           <button class="delete-btn" (click)="deleteFriend()">Delete friend</button>
         </li>
 

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Friend } from './friend';
+import {AddFriendService} from './add-friend.service';
 
 
 
@@ -16,6 +17,8 @@ export class AppComponent {
   friendModel = new Friend();
 
   addFriend(): void {
+    this.addFriendService.addFriend(Friend).subscribe( data => 'it worked', error => 'it didnt work');
+
     if (this.friendModel !== ''){
       const newFriend: Friend = {
         firstName: '',
@@ -25,6 +28,10 @@ export class AppComponent {
     }
     //Friend = '';
   }
+
+  constructor(
+    private addFriendService: AddFriendService,
+  ) {}
 
   deleteFriend(): void{
 

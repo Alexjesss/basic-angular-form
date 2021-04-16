@@ -1,24 +1,26 @@
-{{ friendModel | json }}
 
-<div style="text-align: center">
+
+<div class="container">
+  <img class="logo" src="../assets/logo.png" alt="logo">
   <h1 class="app-title">My friend list</h1>
 </div>
 <div class="container">
-  Add a friend here!
-  <br>
-  <form #formName="ngForm" method="post" novalidate (ngSubmit)="addFriend()">
+  <h3>Add a friend here!</h3>
+  <form #formName="ngForm" method="post" novalidate>
     <div class="row mb-3">
       <div class="col-sm-10">
+        <label for="firstName">First name:</label>
         <input [class.alert-danger]="firstName.invalid && firstName.touched" #firstName="ngModel"
-               pattern="^([a-zA-Z]{1,}'?-?[a-zA-Z]{1,}\s?([a-zA-Z]{1,})?)" name="firstName" type="text"
+               pattern="^([a-zA-Z]{1,}'?-?[a-zA-Z]{1,}\s?([a-zA-Z]{1,})?)" id="firstName" name="firstName" type="text"
                placeholder="Type firstName"
                [(ngModel)]="friendModel.firstName" required></div>
       <div class="message" *ngIf="firstName.invalid && firstName.touched">Required</div>
     </div>
     <div class="row mb-3">
       <div class="col-sm-10">
+        <label for="lastName">Last name:</label>
         <input [class.alert-danger]="lastName.invalid && lastName.touched" #lastName="ngModel"
-               pattern="^([a-zA-Z]{1,}-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)" name="lastName" type="text"
+               pattern="^([a-zA-Z]{1,}-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)" id="lastName" name="lastName" type="text"
                placeholder="Type lastName"
                [(ngModel)]="friendModel.lastName" required>
         <div class="message" *ngIf="lastName.invalid && lastName.touched">Required</div>
@@ -26,8 +28,9 @@
     </div>
     <div class="row mb-3">
       <div class="col-sm-10">
+        <label for="email">email:</label>
         <input [class.alert-danger]="email.invalid && email.touched"
-               pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" #email="ngModel" name="email"
+               pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" #email="ngModel" id="email" name="email"
                type="text" placeholder="Type email"
                [(ngModel)]="friendModel.email">
         <div class="message" *ngIf="email.invalid && email.touched">Required</div>
@@ -35,15 +38,17 @@
     </div>
     <div class="row mb-3">
       <div class="col-sm">
-        <input id="phone" [class.alert-danger]="phoneNumber.invalid && phoneNumber.touched" pattern="[0-9]*"
-               #phoneNumber="ngModel" name="phoneNumber" type="text"
+        <label for="phoneNumber">Phone number:</label>
+        <input id="phone" [class.alert-danger]="phoneNumber.invalid && phoneNumber.touched" pattern="^\ * (((\+|0\ *0\ * ([0-9]\ * [0-9]))|[0-9])(\ *[0-9]){9}\*$"
+               #phoneNumber="ngModel" id="phoneNumber" name="phoneNumber" type="text"
                placeholder="Type phone number"
                [(ngModel)]="friendModel.phoneNumber" required maxlength="13">
         <div class="message" *ngIf="phoneNumber.invalid && phoneNumber.touched">Required</div>
       </div>
     </div>
+    <label for="codingLanguage">Coding language:</label>
     <select #inputName="ngModel" [(ngModel)]="friendModel.codingLanguage"
-            name="codingLanguage" required>>
+            id="codingLanguage" name="codingLanguage" required>>
       <option *ngFor="let languages of codingList" value="{{languages}}">{{languages}}</option>
     </select>
     <button type="submit" [disabled]="formName.form.invalid" (click)="addFriend()" (keyup.enter)="addFriend()"
@@ -52,10 +57,9 @@
     <div class="list">
       <ul>
         <li *ngFor="let friend of friendList">
-          {{ friend.email, friend.firstName }}
-          <button class="delete-btn" (click)="deleteFriend()">Delete friend</button>
+          {{ friend.firstName + ' ' + friend.lastName + ' ' + friend.email + ' ' + friend.phoneNumber + ' ' + friend.codingLanguage }}
+          <button class="delete-btn" (click)="deleteFriend(friend.email)">Delete friend</button>
         </li>
-
       </ul>
     </div>
   </form>

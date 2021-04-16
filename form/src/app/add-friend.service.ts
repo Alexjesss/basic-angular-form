@@ -7,13 +7,10 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class AddFriendService {
+   url = 'http://localhost:9000/addFriend';
+  constructor(private http: HttpClient) {}
 
-  constructor(
-    private http: HttpClient,
-    public url: string,
-    ) {}
-
-    addFriend(friend: Friend): Observable<Friend> {
+    postRequest(friend: Friend): Observable<Friend> {
       return this.http.post( this.url, friend);
     }
 }

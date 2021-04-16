@@ -34,6 +34,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): any {
+    this.fetchFriends();
   }
 
   constructor(
@@ -41,7 +42,14 @@ export class AppComponent implements OnInit {
   ) {
   }
 
-  deleteFriend(email: string): void {
+  public async deleteFriend(email: string): Promise<any> {
+    await fetch(this.getAllFriends, {method: 'get', headers: {'Content-Type': 'application/json'}})
+      .then(response => {
+        return response.json() as Promise<any>;
+      })
+      .then(response => {
+        return this.friendList = response;
+      });
     this.friendList = this.friendList.filter(friend => friend.email !== email);
   }
 

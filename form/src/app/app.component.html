@@ -12,7 +12,7 @@
         <label for="firstName">First name:</label>
         <input [class.alert-danger]="firstName.invalid && firstName.touched" #firstName="ngModel"
                pattern="^([a-zA-Z]{1,}'?-?[a-zA-Z]{1,}\s?([a-zA-Z]{1,})?)" id="firstName" name="firstName" type="text"
-               placeholder="Type firstName"
+               placeholder="Type First name"
                [(ngModel)]="friendModel.firstName" required></div>
       <div class="message" *ngIf="firstName.invalid && firstName.touched">Required</div>
     </div>
@@ -21,7 +21,7 @@
         <label for="lastName">Last name:</label>
         <input [class.alert-danger]="lastName.invalid && lastName.touched" #lastName="ngModel"
                pattern="^([a-zA-Z]{1,}-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)" id="lastName" name="lastName" type="text"
-               placeholder="Type lastName"
+               placeholder="Type Last name"
                [(ngModel)]="friendModel.lastName" required>
         <div class="message" *ngIf="lastName.invalid && lastName.touched">Required</div>
       </div>
